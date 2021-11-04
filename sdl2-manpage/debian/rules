@@ -1,0 +1,13 @@
+#!/usr/bin/make -f
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf $$(pwd)/debian/sdl2-manpage/usr/share/man/man3/SDL_*
+
+override_dh_install:
+	mkdir -p $$(pwd)/debian/sdl2-manpage/usr/share/man/man3
+	cp -av ./src/SDL_* $$(pwd)/debian/sdl2-manpage/usr/share/man/man3/
+	dh_install
+
+%:
+	dh $@

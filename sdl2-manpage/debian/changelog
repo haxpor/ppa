@@ -1,0 +1,6 @@
+sdl2-manpage (0.1.6-git-aae7035-1) focal; urgency=medium
+
+  * Initial release on PPA (use git commit hash for the time being as release
+    version)
+
+ -- Wasin Thonkaew <wasin@wasin.io>  Wed, 03 Nov 2021 11:17:29 +0100
