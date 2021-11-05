@@ -1,0 +1,55 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" (C) Copyright 2021 Wasin Thonkaew <wasin@wasin.io>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH Tt SECTION "November  5 2021"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+tt \- Minimalist Twitter client in C. Inspired by t.
+.SH SYNOPSIS
+.B tt
+.RI update " <tweet-text>
+.br
+.B tt
+.RI update " <tweet-text> -f /path/image [ /path/image2 /path/image3 /path/image4 ]
+.SH DESCRIPTION
+You need to set up environment to make tt works first.
+.PP
+Create a new Twitter app on \fIhttps://developer.twitter.com/en/apps\fR.
+.PP
+Make sure permissions are set to \fBRead and Write\fR. If you change permissions, you have
+to regenerate \fBKeys and tokens\fR.
+.PP
+Set the following environment variables i.e. ~/.bash_aliases for your \fBKeys and tokens\fR
+via syntax \fIexport NAME=VALUE\fR.
+.TP
+.B TT_CONSUMER_KEY
+Cosumer key 
+.TP
+.B TT_CONSUMER_SECRET
+Consumer secret
+.TP
+.B TT_ACCESS_TOKEN
+Access token
+.TP
+.B TT_ACCESS_TOKEN_SECRET
+Access token secret
+
+.PP
+Then make sure you source it via \fIsource ~/.bash_aliases\fR.
+
+.SH Contact
+Wasin Thonkaew <wasin@wasin.io>

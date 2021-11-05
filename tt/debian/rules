@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+export DH_VERBOSE = 1
+
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+out_name:=tt
+target_path:=debian/$(out_name)/usr/bin
+target_doc_path:=debian/$(out_name)/usr/share/man/man1
+cmake_build_dir:=_build
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf $$(pwd)/$(cmake_build_dir)
+
+override_dh_auto_configure:
+	mkdir $$(pwd)/$(cmake_build_dir)
+	dh_auto_configure -- \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-B$$(pwd)/$(cmake_build_dir) \
+		-S .
+
+override_dh_auto_build:
+	make -j$(nproc) -C $$(pwd)/$(cmake_build_dir)
+
+override_dh_install:
+	mkdir -p $$(pwd)/$(target_path)
+	cp -av $$(pwd)/$(cmake_build_dir)/$(out_name) $$(pwd)/$(target_path)/$(out_name)
+	mkdir -p $$(pwd)/$(target_doc_path)
+	cp -av $$(pwd)/debian/$(out_name).1 $$(pwd)/$(target_doc_path)/$(out_name).1
+
+%:
+	dh $@
+
+
+# dh_make generated override targets
+# This is example for Cmake (See https://bugs.debian.org/641051 )
+#override_dh_auto_configure:
+#	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+
