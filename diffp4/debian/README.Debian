@@ -1,0 +1,12 @@
+diffp4 for Debian
+----------------
+
+Diff coloring output text from Perforce (p4) tool.
+
+Example usage
+
+* p4 diff | diffp4
+* p4 describe -S 1234567 | diffp4
+* diffp4 < /somedir/anotherdir/p4_diff.diff
+
+ -- Wasin Thonkaew <wasin@wasin.io>  Fri, 05 Nov 2021 13:43:38 +0100
