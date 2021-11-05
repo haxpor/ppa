@@ -6,3 +6,6 @@ Ubuntu series to release to, integrate/setup with automated build and that's it.
 
 As face value, this whole repository targets on Focal which is the main development
 machine I'm using.
+
+You can manually visit my PPA to explore packages I've published on there so it
+will be ease in installation and using on your side at https://launchpad.net/~haxpor.
