@@ -1,0 +1,20 @@
+Source: rcs
+Section: shells
+Priority: optional
+Maintainer: Wasin Thonkaew <wasin@wasin.io>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.4.1
+Homepage: https://github.com/haxpor/rcs
+#Vcs-Browser: https://salsa.debian.org/debian/rcs
+#Vcs-Git: https://salsa.debian.org/debian/rcs.git
+
+Package: rcs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Recursive code search for convenience wrapping "grep -nr".
+ Recursive code search for convenience in grepping your large codebase.
+ It supports multiple various programming languages which can be configured at
+ command line's arguments.
+ .
+ It is implemented with bash, so you are ready to use it especially if you are
+ terminal heavy user such that your development workflow bases on it.

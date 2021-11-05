@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+# Define multiple lines source code
+# NOTE: we have to treat it as shell environment variables to make it works
+# See https://stackoverflow.com/a/649462/571227.
+define WRAPPER_CODE
+#!/bin/bash
+# Actually we meant to use .bashrc_rcs integrating with user's home directory
+# but this will complicates installation when user installs from PPA as we have
+# to make change to user's .bash_aliases as well.
+#
+# So This entire script is a wrapper that source implementation of rcs.
+source .bashrc_rcs
+
+# forward arguments to rcs()
+rcs $$@
+endef
+
+export WRAPPER_CODE
+
+target_path:=debian/rcs/usr/bin
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f $$(pwd)/$(target_path)/.bashrc_rcs
+
+override_dh_install:
+	mkdir -p $$(pwd)/$(target_path)
+	@echo "$$WRAPPER_CODE" > $$(pwd)/$(target_path)/rcs
+	chmod +x $$(pwd)/$(target_path)/rcs
+	cp -av ./.bashrc_rcs $$(pwd)/$(target_path)/.bashrc_rcs
+	dh_install
+
+%:
+	dh $@
