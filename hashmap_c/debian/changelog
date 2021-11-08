@@ -1,3 +1,9 @@
+hashmap-c (1.0.0.1-1) focal; urgency=medium
+
+  * Fix of missing manpage in the -dev package. Use 'man libhashmap_c'.
+
+ -- Wasin Thonkaew <wasin@wasin.io>  Mon, 08 Nov 2021 23:12:00 +0100
+
 hashmap-c (1.0.0.0-1) focal; urgency=medium
 
   * Initial release

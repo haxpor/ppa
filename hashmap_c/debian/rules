@@ -50,6 +50,7 @@ override_dh_install:
 	@echo "Install specifics for -dev package"
 	dh_auto_install --destdir=./$(target_dev_path) -- install
 	rm -rf ./$(target_dev_path)/usr/lib/*/libhashmap_c.so.*
+	install -p -D ./debian/libhashmap_c.1 ./$(target_dev_path)/usr/share/man/man1/libhashmap_c.1
 
 %:
 	dh $@
