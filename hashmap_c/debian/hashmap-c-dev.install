@@ -1,0 +1,4 @@
+usr/include
+usr/lib/*/libhashmap_c.so
+usr/lib/*/libhashmap_c.a
+usr/lib/*/libhashmap_c.la

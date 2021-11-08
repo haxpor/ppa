@@ -1,0 +1,32 @@
+Source: hashmap-c
+Priority: optional
+Maintainer: Wasin Thonkaew <wasin@wasin.io>
+Build-Depends: debhelper-compat (= 12), autoconf, automake, binutils
+Standards-Version: 4.4.1
+Section: libs
+Homepage: https://github.com/haxpor/hashmap_c
+#Vcs-Browser: https://salsa.debian.org/debian/hashmap-c
+#Vcs-Git: https://salsa.debian.org/debian/hashmap-c.git
+
+Package: hashmap-c-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: hashmap-c (= ${binary:Version}), ${misc:Depends}
+Description: Generic hashmap in C basing on MurmurHash3
+ Generic hashmap with API compatible to be used with C or C++.
+ Internally it uses MurmurHash3 as hashing function with similar mechanism in
+ expanding its heap space when number of items increases.
+ .
+ This packages provides required development files for developers to develop
+ with this library.
+
+Package: hashmap-c
+Architecture: any
+Section: libs
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Generic hashmap in C basing on MurmurHash3
+ Generic hashmap with API compatible to be used with C or C++.
+ Internally it uses MurmurHash3 as hashing function with similar mechanism in
+ expanding its heap space when number of items increases.

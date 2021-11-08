@@ -1,0 +1,108 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" (C) Copyright 2021 Wasin Thonkaew <wasin@wasin.io>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH hashmap-c libs "November  6 2021"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+hashmap-c \- a hashmap library with C API that bases on MurmurHash3 as hashing function
+.SH DESCRIPTION
+It bases on top of specifically MurmurHash3_x32_32 variant as a hashing function.
+.PP
+Internally it will expand by doubling memory space preparing for future addition
+of key-value items whenever the current number of items reach 75% of its current
+capacity which is initially set to be 16.
+.PP
+There's no mechanism to shrink down memory usage, so capacity will be doubled each
+time according to description above.
+
+.SH APIs
+The library provides the following API which is compatible to be used with C or C++.
+.TP
+.B hashmapc* hashmapc_new(unsigned int stride)
+Create a new hashmap
+.br
+ 
+.br
+\fIstride\fR - number of bytes for individual value element
+.br
+Return a new hashmap created on heap
+
+.TP
+.B void hashmapc_free(hashmapc* h)
+Free a hashmap
+.br
+ 
+.br
+\fIh\fR - the hashmap to be freed
+
+.TP
+.B void hashmapc_insert(hashmapc* h, const char* key, void* val)
+Insert a new value at key
+.br
+ 
+.br
+\fIh\fR   - the hashmap to insert a new value into
+.br
+\fIkey\fR - pointer to null-terminated string. Accept up to 32 characters.
+.br
+\fIval\fR - value to be added at \fIkey\fR, it needs to have the same size as of hashmap's stride
+
+.TP
+.B const void* hashmapc_get(hashmapc* h, const char* key)
+Get value from specified \fIkey\fR from the first found.
+.br
+ 
+.br
+\fIh\fR   - the hashmap
+.br
+\fIkey\fR - the key to try to search and get associated value from
+Return an opaque pointer to the found value, otherwise return NULL.
+
+.TP
+.B void hashmapc_delete(hashmapc* h, const char* key)
+Delete item for \fIkey\fR.
+.br
+ 
+.br
+\fIh\fR   - the hashmap
+.br
+\fIkey\fR - the key associated with the item which will be deleted
+
+.TP
+.B void hashmapc_clear(hashmapc* h)
+Clear hashmap
+.br
+ 
+.br
+\fIh\fR - the hashmap to clear all of its elements
+
+.TP
+.B void hashmapc_set_free_internals_elem_func(hashmapc* h, void (*func)(void*))
+Set function which will be called when hashmap's element gets deleted, or entire
+elements of the hashmap get cleared.
+.br
+This function accepts NULL which means no custom function call when hashmap gets
+cleared or its elements get deleted.
+.br
+ 
+.br
+\fIh\fR    - the hashmap
+.br
+\fIfunc\fR - the function pointer pointing to a function to be called when hashmap gets cleared, or its elements get deleted
+
+.SH Contact
+Wasin Thonkaew <\fIwasin@wasin.io\fR>

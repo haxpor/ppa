@@ -1,0 +1,62 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+
+# see FEATURE AREAS in dpkg-buildflags(1)
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+# see ENVIRONMENT in dpkg-buildflags(1)
+# package maintainers to append CFLAGS
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+# package maintainers to append LDFLAGS
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+# these directories base on the name of the package itself (for normal and dev
+# package, see debian/control)
+target_path:=debian/hashmap-c
+target_dev_path:=debian/hashmap-c-dev
+
+override_dh_auto_clean:
+	dh_auto_clean -- distclean
+	rm -rf ./$(target_path)
+	rm -rf ./$(target_dev_path)
+
+override_dh_auto_configure:
+	mkdir -p ./$(target_path)
+	mkdir -p ./$(target_dev_path)
+	./autogen.sh
+	dh_auto_configure
+
+override_db_auto_build:
+	dh_auto_build -- -j$(nproc)
+
+# if we ever need to not strip in certain build
+# but most likely we don't need this in normal, and -dev package.
+# and likely for -dbg package it would be automatic although didn't fully commit
+# to that route.
+#override_dh_strip:
+#	dh_strip -X$(target_dev_path)
+
+override_dh_install:
+	@echo "Install specifics for default package"
+	dh_auto_install --destdir=./$(target_path) -- install
+	strip ./$(target_path)/usr/lib/*/libhashmap_c.so.1.0.0
+	rm -rf ./$(target_path)/usr/include
+	rm -rf ./$(target_path)/usr/lib/*/libhashmap_c.so
+	rm -rf ./$(target_path)/usr/lib/*/libhashmap_c.a
+	rm -rf ./$(target_path)/usr/lib/*/libhashmap_c.la
+	@echo "Install specifics for -dev package"
+	dh_auto_install --destdir=./$(target_dev_path) -- install
+	rm -rf ./$(target_dev_path)/usr/lib/*/libhashmap_c.so.*
+
+%:
+	dh $@
+
+
+# dh_make generated override targets
+# This is example for Cmake (See https://bugs.debian.org/641051 )
+#override_dh_auto_configure:
+#	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
+
