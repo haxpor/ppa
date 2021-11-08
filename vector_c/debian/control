@@ -1,0 +1,31 @@
+Source: vector-c
+Priority: optional
+Maintainer: Wasin Thonkaew <wasin@wasin.io>
+Build-Depends: debhelper-compat (= 12), autoconf, automake, binutils
+Standards-Version: 4.4.1
+Section: libs
+Homepage: https://github.com/haxpor/vector_c
+#Vcs-Browser: https://salsa.debian.org/debian/vector-c
+#Vcs-Git: https://salsa.debian.org/debian/vector-c.git
+
+Package: vector-c-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: vector-c (= ${binary:Version}), ${misc:Depends}
+Description: Generic vector array implemented in C
+ vector array in C to provide simple but core functinality as seen in std::vector.
+ Internally it allocates more memory space to reduce expensive call to realloc()
+ by using 1.5 as factor of increasing elements similar to what it did in std::vector.
+ .
+ This is a development package that consists of header files, and static library
+ for developing with this library.
+
+Package: vector-c
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Generic vector array implemented in C
+ vector array in C to provide simple but core functinality as seen in std::vector.
+ Internally it allocates more memory space to reduce expensive call to realloc()
+ by using 1.5 as factor of increasing elements similar to what it did in std::vector.

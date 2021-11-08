@@ -1,0 +1,106 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" (C) Copyright 2021 Wasin Thonkaew <wasin@wasin.io>,
+.\"
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH libvector_c libdevel "November  8 2021"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+libvector_c \- Generic type vector array implemented in C
+.SH DESCRIPTION
+Vector array in C to provide simple but core functionality as seen in std::vector.
+.PP
+Internally it allocates more memory space to reduce expensive call to realloc()
+by using 1.5 factor multiplying to the current number of the heap space allocated
+that the vector currently is at. This is similar to what it is in std::vector.
+
+.SH APIs
+The library provides the following API which is compatible to be used with C or C++.
+To use the library, include the header file of \fIvector/vector.h\fR.
+.TP
+.B vector* vector_new(int estimatedLen, int stride)
+Create a new vector
+.br
+ 
+.br
+\fIestimatedLen\fR - estimated number of elements a vector to be created will be holding at any given time.
+This value will be used when \fIvector_shrink()\fR function is called to shrink
+down the allocated memory.
+.br
+\fIstride\fR       - number of bytes for individual value element
+.br
+Return a new vector created on heap
+
+.TP
+.B void vector_add(vector* v, void* d)
+Append a new element to the vector
+.br
+ 
+.br
+\fIv\fR - pointer to vector to append a new element to
+.br
+\fId\fR - opaque pointer to a new element to be added to
+
+.TP
+.B void vector_remove(vector* v, int i)
+Remove an element at specified index
+.br
+ 
+.br
+\fIv\fR - poitner to vector
+.br
+\i\fR   - index of element to be removed
+
+.TP
+.B void* vector_get(vector* v, int i)
+Get element from vector at specified index
+.br
+ 
+.br
+\fIv\fR - pointer to vector
+.br
+\fIi\fR - index to get element from vector 
+.br
+Return a pointer to the element at specified index, if such index is out of range
+then return NULL.
+
+.TP
+.B void vector_clear(vector* v)
+Clear all elements inside the vector.
+.br
+ 
+.br
+\fIv\fR   - pointer to vector
+
+.TP
+.B void vector_free(vector* v)
+Free vector from memory. After calling this function, vector will be freed and
+set to NULL.
+.br
+ 
+.br
+\fIv\fR - pointer to vector
+
+.TP
+.B void vector_shrink_to_fit(vector* v)
+Shrink allocated memory space of vector down to current number of elements that
+the vector has.
+.br
+ 
+.br
+\fIv\fR    - pointer to vector
+
+.SH Contact
+Wasin Thonkaew <\fIwasin@wasin.io\fR>
